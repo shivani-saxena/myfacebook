@@ -1,0 +1,143 @@
+{% load staticfiles %}
+{% static "" as baseUrl %}
+<html>
+<head>
+	<title>Social Media</title>
+
+<script src='js/jquery.js'></script>
+<script src='js/bootstrap.js'></script>
+<script src='js/bootstrap.min.js'></script>
+<link rel="stylesheet" type="text/css" href="{{baseUrl}}css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{{baseUrl}}font-awesome/css/font-awesome.min.css">
+
+
+<script type="text/javascript">
+	//jquery for showing model using ajax php page.
+	$(document).ready(function()
+		{
+			
+		});
+</script>
+<style type="text/css">
+.treb{font-family: Trebuchet MS}
+.flex{display: flex}
+.hub-top {position: fixed;top: 0;z-index: 20;width: 100%;background: #222;height: 111px;}
+.logo{padding:11px 5px 11px 22px;color: white}
+.logo i{color: white;font-size: 77pt}
+.logoname{color: white;font-size: 22pt;padding: 22px 11px;}
+.login{margin: 11px; color:white;}
+.m1{margin: 1px}
+.dashboard{background: #333333;position: fixed;height: 100%;width: 17%;box-shadow: 2px 2px 22px black;padding-top: 111px;}
+.dashboard span{color: black;font-size: 16px;padding: 11px 22px;background: lightblue;display: block;box-shadow: 1px 1px 2px black}
+.dashboard ul{list-style: none;padding: 0}
+.dashboard ul li{color: white;padding: 6px 22px;display: block;font-size: 14pt;box-shadow: 1px 1px 2px black;;margin-top: 3px}
+.dashboard ul li:hover{box-shadow: 1px 1px 2px green;cursor: pointer;background: #ADD8E6;color: black}
+.dashboard ul li i{float: right;padding-top: 5px}
+.dashboard:hover{box-shadow: 2px 2px 22px green}
+.admin-pic{position: relative;top: -88px;left: 33px}
+.admin-name{position: relative;top: -166px;left: 166px;font-size: 13pt;}
+.admin-pic img{width: 111px ;height: 111px}
+.name{}
+.center{text-align: center;}
+#mydiv:hover{box-shadow: 2px 2px 22px blue}
+</style>
+</head>
+<body style="background: url(photo/bg.jpg) fixed;">
+
+
+<div class="background-image"></div>
+<div class="hub-top">
+	<div class="logo flex pull-left">
+		<div><i class="glyphicon glyphicon-cloud"></i></div>
+		<div class="logoname treb"><span>Welcome</span><br><span>{{request.session.email}}</span></div>
+	</div>
+	<span>
+		<h1><font face="Times New Roman" size="5" color="white">Add Friend</font></h1>
+
+	</span>
+
+ <form action="SendRequest">
+        <input type="text" name="rec" placeholder="enter ID here">
+        <input type="submit" value="Send Request"><br>
+            {{fmsg}}
+            </form>
+
+</div>
+</div>
+<div class="dashboard treb " style="background-color: rgba(0, 0, 0, 0.4);  opacity: inherit;">
+	<span class="dbname">Friend Request</span>
+	<table><tr>
+        <td width="20%">
+            {% for i in rlist %}
+            {{i.sender}}<a href="Accept?id={{i.id}}">Accept</a>&nbsp;
+            <a href="Reject?id={{i.id}}">Reject</a><br>
+            {%endfor%}
+		</td></tr></table>
+</div>
+<div style=";margin-left: 18%;padding-top: 122px" class="flex">
+	<div class=" well" style="width: 52%; background-color: rgba(0, 0, 0, 0.4);  opacity: inherit;" id="mydiv">
+		<img src="{{baseUrl}}photo/spimg.jpg" class="img-responsive img-thumbnail" style="width:550px ;height: 224px;" >
+		<div class="admin-pic">
+        <img src="{{baseUrl}}photo/user.png" class="img-circle img-thumbnail"></div>
+
+        <div class="admin-name img-thumbnail treb ">{{request.session.email}}</div>
+		<div class="well well-sm treb" style="position: relative;top: -122px;">
+            <table border="5" border-color="black"><tr><td width="50%">
+                <h4><font style="Times New Roman">Wall Post</font></h4></td>
+                <td width="50%"><h3>Add profile picture and edit profile:</h3></td></tr>
+                <tr><td width="50%">
+            <form action="savepost">
+            <textarea rows="5" cols="20" name="msg"></textarea>
+            <input type="submit" value="Post"><br><br>
+            {% for i in msg %}
+                {{i}}<br><br>
+                {%endfor%}
+            </form></td>
+                    <td>
+            <form action="uploadpic" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        User Name :<br><input type="text" name="username" id="usrname"/><br/>
+        Age :<br><input type="text" name="age" id="age"/><br/>
+        Email :<br><input type="email" name="email">
+        <input type="file" name="myfile" /><br/>
+                <input type="submit" name="submit" value="Upload" /></form>
+                         <table border="2">
+                             <tr>
+                                 <td>Name</td>
+                                  <td>Email</td>
+                                  <td>Age</td>
+                                 <td>Profile pic</td>
+                             </tr>
+	{%for m in users %}
+ <tr>
+
+ <td>{{m.name}}</td>
+ <td>{{m.email}}</td>
+ <td>{{m.age}}</td>
+     <td><img src="{{baseUrl}}media/{{m.profile_picture}}" height="200"></td></tr>
+{% endfor %}
+        </table></td></tr></table>
+
+</td></tr></table>
+        </div>
+
+	</div>
+	<div class="well well-sm" id="mydiv" style="width: 44%;margin-left: 33px;background-color: rgba(0, 0, 0, 0.4);  opacity: inherit">
+		<div class="well well-sm " style="background-color: rgba(0, 0, 0, 0.4);  opacity: inherit;color: white"><h4 class="center">Friends</h4></div>
+		<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+
+            <h5 align="center">{% for i in myfriends %}
+            {{i}}<br>
+            {%endfor%}
+            </h5>
+      </h4>
+
+	</div>
+  </div></div></div></div>
+
+</body>
+</html>
+

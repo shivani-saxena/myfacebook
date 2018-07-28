@@ -1,0 +1,31 @@
+<html>
+<head>
+    <script>
+        var x;
+        function disp(str)
+        {
+        x=new XMLHttpRequest();
+        x.open("GET","AJAX2?s="+str,true);
+        x.onreadystatechange=dispres;
+        x.send(null);
+        }
+        function dispres()
+        {
+        if(x.readyState==4)
+        document.getElementById("cities").innerHTML=x.responseText;
+        }
+    </script>
+</head>
+<body>
+<select onchange="disp(this.value)">
+    <Option>Select...</Option>
+    <Option>UP</Option>
+    <Option>Haryana</Option>
+</select>
+<select id="cities">
+    <Option>Select...</Option>
+</select>
+
+
+</body>
+</html>

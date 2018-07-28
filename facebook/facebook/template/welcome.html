@@ -1,0 +1,46 @@
+<html>
+<body>
+
+<table>
+    <tr>
+        <td width="20%"><h1>Welcome {{request.session.email}}</h1></td>
+        <td width="60%">
+            <form action="SendRequest">
+        <input type="text" name="rec" placeholder="enter ID here">
+        <input type="submit" value="Send Request"><br>
+            {{fmsg}}
+            </form>
+        </td>
+        <td width="20%"></td>
+    </tr>
+    <tr>
+        <td width="20%">
+            {% for i in rlist %}
+            {{i.sender}}<a href="Accept?id={{i.id}}">Accept</a>&nbsp;
+            <a href="Reject?id={{i.id}}">Reject</a><br>
+            {%endfor%}
+
+
+        </td>
+        <td width="60%">
+            <form action="savepost">
+            <textarea rows="5" cols="20" name="msg"></textarea>
+            <input type="submit" value="Post"><br><br>
+            {% for i in msg %}
+                {{i}}<br><br>
+                {%endfor%}
+            </form>
+
+        </td>
+        <td width="20%">
+            {% for i in myfriends %}
+            {{i}}<br>
+            {%endfor%}
+</td>
+    </tr>
+
+
+</table>
+
+</body>
+</html>

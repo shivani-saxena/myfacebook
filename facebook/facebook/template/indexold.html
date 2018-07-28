@@ -1,0 +1,48 @@
+<html>
+<head>
+    <script>
+        var x;
+            function save()
+            {
+            var email=document.getElementById("email").value;
+            var pwd=document.getElementById("pwd").value;
+            var name=document.getElementById("name").value;
+            var g=document.getElementById("g1");
+            var gender="Female";
+            if(g.checked)
+                gender="Male";
+            x=new XMLHttpRequest()
+            x.open("GET","SignUp?email="+email+"&pwd="+pwd+"&name="+name+"&gender="+gender);
+            x.onreadystatechange=abc;
+            x.send(null);
+            }
+            function abc()
+            {
+            if(x.readyState==4)
+            {
+            alert(x.responseText);
+            }
+            }
+
+    </script>
+</head>
+<body>
+<h1>Sign Up Details</h1>
+<form action="SignUp">
+    <input type="text" name="email" id="email" placeholder="Enter email"><br>
+    <input type="password" name="pwd" id="pwd" placeholder="Enter pass"><br>
+    <input type="text" name="name"  id="name" placeholder="Enter Name"><br>
+    <input type="radio" name="gender" id="g1" value="Male">Male
+    <input type="radio" name="gender" id="g2" value="Female">Female
+    <input type="button" value="Save Data" onclick="save()">
+</form>
+<br><br>
+<h1>Login Details</h1>
+<form action="Login">
+   <input type="text" name="email" placeholder="Enter email"><br>
+    <input type="password" name="pwd"  placeholder="Enter pass"><br>
+    <input type="submit" value="Login"><br>
+
+</form>
+</body>
+</html>
